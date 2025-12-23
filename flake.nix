@@ -12,26 +12,36 @@
     zephyr-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, zephyr-nix, ... }: let
-    systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-  in {
-    devShells = forAllSystems (
-      system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        zephyr = zephyr-nix.packages.${system};
-        keymap_drawer = pkgs.python3Packages.callPackage ./nix/keymap-drawer.nix {};
-      in {
-        default = pkgs.mkShellNoCC {
-          packages =
-            [
+  outputs =
+    { nixpkgs, zephyr-nix, ... }:
+    let
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in
+    {
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          zephyr = zephyr-nix.packages.${system};
+          keymap_drawer = pkgs.python3Packages.callPackage ./nix/keymap-drawer.nix { };
+        in
+        {
+          default = pkgs.mkShellNoCC {
+            packages = [
               zephyr.pythonEnv
-              (zephyr.sdk-0_16.override {targets = ["arm-zephyr-eabi"];})
+              (zephyr.sdk-0_16.override { targets = [ "arm-zephyr-eabi" ]; })
 
               pkgs.cmake
               pkgs.dtc
               pkgs.gcc
               pkgs.ninja
+              pkgs.llvmPackages_20.clang-tools
 
               pkgs.just
               pkgs.yq # Make sure yq resolves to python-yq.
@@ -48,12 +58,12 @@
               # pkgs.gnused
             ];
 
-          shellHook = ''
-            export ZMK_BUILD_DIR=$(pwd)/.build;
-            export ZMK_SRC_DIR=$(pwd)/zmk/app;
-          '';
-        };
-      }
-    );
-  };
+            shellHook = ''
+              export ZMK_BUILD_DIR=$(pwd)/.build;
+              export ZMK_SRC_DIR=$(pwd)/zmk/app;
+            '';
+          };
+        }
+      );
+    };
 }
