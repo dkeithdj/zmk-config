@@ -188,7 +188,7 @@ ZMK_MACRO(vim_save, bindings = <&kp ESC &kp COLON &kp W &kp ENTER>;)
 #define DSK_NEXT  &hmr LALT LA(LS(LC(RIGHT))) // Next     desktop.
 #define PIN_WIN   &kp LG(LC(LS(Q)))       // Pin window across desktops.
 #define PIN_APP   &kp LG(LC(LS(A)))       // Pin application across desktops.
-#define DSK_MGR   &kp LA(GRAVE)           // Desktop manager.
+#define DSK_MGR   &kp LG(GRAVE)           // Desktop manager.
 #define VOL_DOWN  &hmr RSHFT C_VOL_DN
 
 /* Keymap */

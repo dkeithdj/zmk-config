@@ -10,15 +10,16 @@ parse_config:
     "&sys_reset": Reset
     "&bootloader": Boot
     "&caps_word": Caps Word
+    "&vim_save": Vim Save
 
     "&bt BT_SEL 0": BT 1
     "&bt BT_SEL 1": BT 2
     "&bt BT_SEL 2": BT 3
     "&bt BT_SEL 3": BT 4
 
-    "&kp LC(INS)": Copy
-    "&kp LC(X)": Cut
-    "&kp LS(INS)": Paste
+    "&kp LG(C)": Copy
+    "&kp LG(X)": Cut
+    "&kp LG(V)": Paste
 
     "&kp LG(LC(LEFT))": Prev Desk
     "&kp LG(LC(RIGHT))": Next Desk
@@ -32,7 +33,10 @@ parse_config:
     "&magic_shift": { "t": Magic, "h": "Shift" }
     "&smart_mouse": Smart Mouse
 
-    "&hml LS(LALT)TAB": Tab
+    # "&hml LS(LALT)TAB": Tab
+    "&hml LS(LALT)ESC": Esc
+    "&hmr LCTRL LA(LS(LC(LEFT)))": Prev Desk
+    "&hmr LALT LA(LS(LC(RIGHT)))": Next Desk
     "&hm_combo_ldr": Leader
     "&hm_combo_ldrsh": Shift+Leader
     "&hm_combo_lpar": { "t": "(", "right": "<" }
@@ -172,4 +176,4 @@ parse_config:
 draw_config:
   append_colon_to_layer_header: false
   dark_mode: auto
-  footer_text: "urob/zmk-config"
+  footer_text: "dkeithdj/zmk-config inspired by urob"
